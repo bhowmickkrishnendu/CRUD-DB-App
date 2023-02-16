@@ -1,10 +1,10 @@
 <?php
 error_reporting(0);
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "krish_contactdb";
+$servername = getenv('MYSQL_ROOT_HOST');
+$username = getenv('MYSQL_USER');
+$password = getenv('MYSQL_PASSWORD');
+$dbname = getenv('MYSQL_DATABASE');
 
 // Create a PDO instance
 try {
