@@ -15,9 +15,6 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY . .
 
-# Install the dependencies
-RUN composer install --no-dev
-
 # Stage 2: Build the database
 FROM mysql:8.0 AS db-build
 
@@ -48,7 +45,7 @@ COPY styleedit.css .
 COPY style.css .
 
 # Copy the database files
-COPY --from=db-build /usr/local/mysql /usr/local/mysql
+COPY --from=db-build /usr/local/mysql /usr/local/
 
 # Set the database configuration
 COPY db.php .
