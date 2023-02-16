@@ -1,0 +1,75 @@
+/* Style the page title */
+h1 {
+    color: #333;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  /* Style the form */
+  form {
+    margin: 0 auto;
+    max-width: 500px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Style the form labels */
+  form label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Style the form input fields */
+  form input[type=text], form input[type=email] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Style the submit button */
+  form input[type=submit] {
+    background-color: #333;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Add margin to top and bottom of the form */
+  form > *:first-child {
+    margin-top: 0;
+  }
+  form > *:last-child {
+    margin-bottom: 0;
+  }
+ /* Style the footer */
+ footer {
+    background-color: #333;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding: 10px;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  /* Style the copyright message */
+  footer span {
+    font-weight: bold;
+  }
