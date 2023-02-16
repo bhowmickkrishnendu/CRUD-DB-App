@@ -5,7 +5,8 @@ RUN apt-get update && \
     apt-get install -y \
     git \
     unzip \
-    && rm -rf /var/lib/apt/lists/*
+    libpq-dev \
+    && docker-php-ext-install pdo_mysql pdo_pgsql
 
 # Enable Apache modules
 RUN a2enmod rewrite
@@ -19,9 +20,6 @@ COPY style.css .
 
 # Copy the database configuration
 COPY db.php .
-
-# DB Table Create
-#COPY schema.sql /docker-entrypoint-initdb.d/
 
 # Set the permissions
 RUN chown -R www-data:www-data .
