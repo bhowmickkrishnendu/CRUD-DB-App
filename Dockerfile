@@ -54,10 +54,6 @@ RUN sed -i "s/MYSQL_DATABASE/${MYSQL_DATABASE}/g" db.php && \
     sed -i "s/MYSQL_PASSWORD/${MYSQL_PASSWORD}/g" db.php && \
     sed -i "s/MYSQL_ROOT_HOST/${MYSQL_ROOT_HOST}/g" db.php
 
-# Set the footer
-COPY footer.php .
-RUN sed -i "s/COPYRIGHT_YEAR/$(date +%Y)/g" footer.php
-
 # Set the permissions
 RUN chown -R www-data:www-data .
 
