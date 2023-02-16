@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Krishnendu's CRUD App.</title>
-</head>
-<body>
 <?php
 ob_start();
 // Establish a connection to the database
@@ -34,8 +28,13 @@ if (isset($_POST['update'])) {
 
 ob_end_flush();
 ?>
-
-<link rel="stylesheet" type="text/css" href="styleedit.css">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Krishnendu's CRUD App.</title>
+  <link rel="stylesheet" type="text/css" href="styleedit.css">
+</head>
+<body>
 
 <h1>Edit Record</h1>
 
