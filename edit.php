@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="styleedit.css">
 <?php
+ob_start();
 // Establish a connection to the database
 include 'db.php';
 error_reporting(0);
@@ -25,6 +26,7 @@ if (isset($_POST['update'])) {
   header('Location: index.php');
   exit();
 }
+ob_end_flush();
 ?>
 
 <h1>Edit Record</h1>
