@@ -5,7 +5,6 @@ FROM php:7.4-apache AS app-build
 RUN apt-get update && \
     apt-get install -y \
     git \
-    php-mysql \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
@@ -34,6 +33,12 @@ COPY schema.sql /docker-entrypoint-initdb.d/
 
 # Stage 3: Build the final image
 FROM php:7.4-apache
+
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    php-mysql \
+    && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache modules
 RUN a2enmod rewrite
