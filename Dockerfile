@@ -44,7 +44,7 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 COPY --from=app-build /app .
 COPY edit.php .
-COPY editstyle.css .
+COPY styleedit.css .
 COPY style.css .
 
 # Copy the database files
