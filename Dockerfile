@@ -45,7 +45,7 @@ COPY styleedit.css .
 COPY style.css .
 
 # Copy the database files
-COPY --from=db-build /usr/local/mysql /usr/local/
+COPY --from=db-build /var/lib/mysql /var/lib/mysql
 
 # Set the database configuration
 COPY db.php .
