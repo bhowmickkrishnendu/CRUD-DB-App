@@ -2,6 +2,10 @@
 
 A simple CRUD (Create, Read, Update, Delete) application built with PHP and MySQL by Krishnendu Bhowmick.
 
+## Screenshot
+
+![alt text](https://github.com/bhowmickkrishnendu/crud-db-app/blob/master/Screenshot.jpg?raw=true)
+
 ## Requirements
 
 - Docker
