@@ -18,6 +18,12 @@ A simple CRUD (Create, Read, Update, Delete) application built with PHP and MySQ
 
 Once the application is running, you can access it in your web browser at http://localhost. You can perform CRUD operations on the Contacts table.
 
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+Note that the code snippet above is just an example and may not be related to the actual code of your CRUD application.
+
+
 ## Code Snippet
 
 ```php
@@ -36,7 +42,3 @@ function getContact($id) {
 
     return $result->fetch_assoc();
 }
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-Note that the code snippet above is just an example and may not be related to the actual code of your CRUD application.
