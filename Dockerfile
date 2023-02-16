@@ -32,7 +32,7 @@ ARG MYSQL_PASSWORD
 ENV MYSQL_DATABASE=$MYSQL_DATABASE
 ENV MYSQL_USER=$MYSQL_USER
 ENV MYSQL_PASSWORD=$MYSQL_PASSWORD
-COPY db/schema.sql /docker-entrypoint-initdb.d/
+COPY schema.sql /docker-entrypoint-initdb.d/
 
 # Stage 3: Build the final image
 FROM php:7.4-apache
