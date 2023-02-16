@@ -1,4 +1,9 @@
-<link rel="stylesheet" type="text/css" href="styleedit.css">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Krishnendu's CRUD App.</title>
+</head>
+<body>
 <?php
 ob_start();
 // Establish a connection to the database
@@ -26,8 +31,11 @@ if (isset($_POST['update'])) {
   header('Location: index.php');
   exit();
 }
+
 ob_end_flush();
 ?>
+
+<link rel="stylesheet" type="text/css" href="styleedit.css">
 
 <h1>Edit Record</h1>
 
@@ -47,6 +55,9 @@ ob_end_flush();
   <br>
   <input type="submit" name="update" value="Update">
 </form>
+
 <footer>
   <span>&copy; Krishnendu Bhowmick 2023</span> - All Rights Reserved
 </footer>
+</body>
+</html>
