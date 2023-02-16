@@ -5,6 +5,7 @@ FROM php:7.4-apache AS app-build
 RUN apt-get update && \
     apt-get install -y \
     git \
+    php-mysql \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
