@@ -21,7 +21,7 @@ COPY style.css .
 COPY db.php .
 
 # DB Table Create
-COPY schema.sql /docker-entrypoint-initdb.d/
+#COPY schema.sql /docker-entrypoint-initdb.d/
 
 # Set the permissions
 RUN chown -R www-data:www-data .
