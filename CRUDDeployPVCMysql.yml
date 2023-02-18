@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crud-db-app-deployment
+  labels:
+    app: crud-db-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: crud-db-app
+  template:
+    metadata:
+      labels:
+        app: crud-db-app
+    spec:
+      containers:
+        - name: crud-db-app-container
+          image: krishhub/crud-db-app
+          ports:
+            - containerPort: 80
+---
+# Expose the deployment as a NodePort service
+apiVersion: v1
+kind: Service
+metadata:
+  name: crud-db-app-service
+spec:
+  type: NodePort
+  selector:
+    app: crud-db-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 30021
