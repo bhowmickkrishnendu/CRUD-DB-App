@@ -1,7 +1,20 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pv
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: crud-db-app-deployment
+  namespace: default
   labels:
     app: crud-db-app
 spec:
@@ -19,12 +32,98 @@ spec:
           image: krishhub/crud-db-app
           ports:
             - containerPort: 80
+          env:
+            # Set environment variables for the database connection
+            - name: MYSQL_ROOT_HOST
+              value: crud-db-service
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_DATABASE
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crud-mysqldb-app
+  namespace: default
+  labels:
+    app: crud-mysqldb-app
+spec:
+  selector:
+    matchLabels:
+      app: crud-mysqldb-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: crud-mysqldb-app
+    spec:
+      containers:
+      - name: crud-mysqldb-app
+        image: mysql:8.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_DATABASE
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-data
+        persistentVolumeClaim:
+          claimName: nfs-pv
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crud-db-service
+  namespace: default
+  labels:
+    app: crud-mysqldb-app
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: crud-mysqldb-app
 ---
 # Expose the deployment as a NodePort service
 apiVersion: v1
 kind: Service
 metadata:
   name: crud-db-app-service
+  namespace: default
 spec:
   type: NodePort
   selector:
