@@ -99,6 +99,8 @@ spec:
         volumeMounts:
         - name: mysql-data
           mountPath: /var/lib/mysql
+        - name: create-tables
+          mountPath: /scripts
       volumes:
       - name: mysql-data
         persistentVolumeClaim:
