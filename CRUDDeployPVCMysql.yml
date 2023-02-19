@@ -110,7 +110,7 @@ metadata:
   name: crud-db-service
   namespace: default
   labels:
-    app: crud-mysqldb-app
+    app: crud-db-services
 spec:
   ports:
     - port: 3306
