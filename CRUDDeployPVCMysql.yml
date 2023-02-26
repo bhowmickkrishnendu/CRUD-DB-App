@@ -20,7 +20,17 @@ data:
   MYSQL_ROOT_PASSWORD: ZGVtb0AxMjM=             #demo@123
   MYSQL_USER: a3Jpc2h1c2Vy                      #krishuser
   MYSQL_PASSWORD: a3Jpc2gxMjM0                  #krish1234
-  MYSQL_DATABASE: a3Jpc2hfY29udGFjdGJk          #krish_contactdb
+  MYSQL_DATABASE: a3Jpc2hfY29udGFjdGJk          #krish_contactbd
+---
+#03-UserManagement-ConfigMap.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: usermanagement-dbcreation-script
+data: 
+  mysql_usermgmt.sql: |-
+    USE krish_contactbd;
+    CREATE TABLE IF NOT EXISTS contacts (id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50) NOT NULL, place VARCHAR(50), email VARCHAR(50) NOT NULL, contact_number VARCHAR(20) NOT NULL); 
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -119,10 +129,15 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
+        - name: usermanagement-dbcreation-script
+          mountPath: /docker-entrypoint-initdb.d #https://hub.docker.com/_/mysql Refer Initializing a fresh instance
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: my-pvc
+      - name: usermanagement-dbcreation-script
+        configMap:
+          name: usermanagement-dbcreation-script
 ---
 apiVersion: v1
 kind: Service
