@@ -1,14 +1,26 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-pv
-  namespace: default
+  name: my-pvc
 spec:
+  storageClassName: gp2
   accessModes:
-  - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: ZGVtb0AxMjM=             #demo@123
+  MYSQL_USER: a3Jpc2h1c2Vy                      #krishuser
+  MYSQL_PASSWORD: a3Jpc2gxMjM0                  #krish1234
+  MYSQL_DATABASE: a3Jpc2hfY29udGFjdGJk          #krish_contactdb
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -32,6 +44,13 @@ spec:
           image: krishhub/crud-db-app
           ports:
             - containerPort: 80
+          resources:
+            requests:
+              cpu: 300m
+              memory: 256Mi
+            limits:
+              cpu: 300m
+              memory: 256Mi
           env:
             # Set environment variables for the database connection
             - name: MYSQL_ROOT_HOST
@@ -69,6 +88,7 @@ spec:
       labels:
         app: crud-mysqldb-app
     spec:
+      automountServiceAccountToken: true
       containers:
       - name: crud-mysqldb-app
         image: mysql:8.0
@@ -97,12 +117,12 @@ spec:
         - containerPort: 3306
           name: mysql
         volumeMounts:
-        - name: mysql-data
+        - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
       volumes:
-      - name: mysql-data
+      - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: nfs-pv
+          claimName: my-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -125,11 +145,10 @@ metadata:
   name: crud-db-app-service
   namespace: default
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: crud-db-app
   ports:
     - name: http
       port: 80
       targetPort: 80
-      nodePort: 30021
